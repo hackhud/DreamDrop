@@ -1,0 +1,12 @@
+drops:
+  "DropOne":
+    npcName: "[10] Бездомный"
+    npcTitle: "Обычный"
+    items:
+      "default":
+        - "simple;id;chance;count"
+        - "weighted;chance"
+      "меч огня":
+        - "simple;id;chance;count"
+        - "weighted;chance"
+#add armor too

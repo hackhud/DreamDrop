@@ -1,0 +1,53 @@
+# hackhud's config 31.07.2025
+
+#starts with
+stringToReplace: "{icon2}.png §7Заточка предмета:"
+attributeStartString: "{icon154}.png §7Дополнительные свойства:"
+attributePattern: '^(\§[a-zA-Z0-9]+)([+-])(\d+\.?\d*)(%?) ?(.*)$'
+
+rarities:
+  1:
+    hex1: "#FFD700"
+    hex2: "#FF8C00"
+    rarityLore: "{icon158}.png §7Качество предмета: #606060О#606060б#606060ы#606060ч#6D6D6Dн#797979о#868686е"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #606060Обычный слиток §7(%count% шт.)"
+  2:
+    hex1: "#60B866"
+    hex2: "#3C6B32"
+    rarityLore: "{icon158}.png §7Качество предмета: #60B866Н#5CAE60е#57A559о#539B53б#4E924Cы#4A8846ч#457E3Fн#417539о#3C6B32е"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #60B866Необычный слиток §7(%count% шт.)"
+  3:
+    hex1: "#0064FF"
+    hex2: "#8000FF"
+    rarityLore: "{icon158}.png §7Качество предмета: #0064FFР#0064FFе#0064FFд#2B43FFк#5521FFо#8000FFе"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #0064FFРедкий слиток §7(%count% шт.)"
+  4:
+    hex1: "#8000FF"
+    hex2: "#BF5DFC"
+    rarityLore: "{icon158}.png §7Качество предмета: #8000FFЭ#8000FFп#8000FFи#8000FFч#8D13FEе#9925FEс#A638FDк#B24AFDо#BF5DFCе"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #8000FFЭпический слиток §7(%count% шт.)"
+  5:
+    hex1: "#E91437"
+    hex2: "#D9050E"
+    rarityLore: "{icon158}.png §7Качество предмета: #E91437М#E91437и#E91437ф#E91437и#E91437ч#E6112Fе#E30E27с#DF0B1Eк#DC0816о#D9050Eе"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #E91437Мифический слиток §7(%count% шт.)"
+  6:
+    hex1: "#CB8A10"
+    hex2: "#FFAA0C"
+    rarityLore: "{icon158}.png §7Качество предмета: #CB8A10Л#CB8A10е#CB8A10г#CB8A10е#CB8A10н#D48F0Fд#DC950Fа#E59A0Eр#EE9F0Dн#F6A50Dо#FFAA0Cе"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #CB8A10Легендарный слиток §7(%count% шт.)"
+  7:
+    hex1: "#BF5DFC"
+    hex2: "#AE3A47"
+    rarityLore: "{icon158}.png §7Качество предмета: #BF5DFCБ#BC56D8о#B84FB4ж#B5488Fе#B1416Bс#AE3A47т#AE3A47в#AE3A47е#AE3A47н#AE3A47н#AE3A47о#AE3A47е"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #BF5DFCБожественный слиток §7(%count% шт.)"
+  8:
+    hex1: "#0EFF00"
+    hex2: "#66D97C"
+    rarityLore: "{icon158}.png §7Качество предмета: #0EFF00Р#1DF915е#2BF229л#3AEC3Eи#49E653к#57DF67в#66D97Cа#66D97Cр#66D97Cн#66D97Cо#66D97Cе"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #0EFF00Реликварный слиток §7(%count% шт.)"
+  9:
+    hex1: "#500F24"
+    hex2: "#79364B"
+    rarityLore: "{icon158}.png §7Качество предмета: #500F24Д#57162Bр#5E1C31е#652338в#6B293Eн#723045е#79364Bе"
+    repairLore: "{icon19}.png§7 Ремонт с помощью: #500F24Древний слиток §7(%count% шт.)"

@@ -1,0 +1,7 @@
+name: DreamDrop
+main: ua.hackhud.DreamDrop.Main
+version: 1.0
+author: hackhud
+
+commands:
+  dreamdrop:

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DreamDrop">
+    <output-path>$PROJECT_DIR$/out/artifacts/DreamDrop</output-path>
+    <root id="archive" name="DreamDrop.jar">
+      <element id="module-output" name="DreamPerks" />
+    </root>
+  </artifact>
+</component>
