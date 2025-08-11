@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import ua.hackhud.DreamDrop.Main;
 import ua.hackhud.DreamDrop.Enum.ItemType;
-import ua.hackhud.DreamDrop.Perk.PerkManager;
 import ua.hackhud.DreamDrop.Entity.RPGItemStack;
 import ua.hackhud.DreamDrop.Transformation.PerkTransformation;
 import ua.hackhud.DreamDrop.Util.ConvertUtils;
@@ -37,7 +36,7 @@ public class ItemDropListener implements Listener {
         if (title.contains("Элитный")) {
             addCurrencyDrop(loot, RUBINE, level);
             rollPerksOnLoot(loot);
-            event.setDrop(loot);
+            //event.setDrop(loot);
         }
     }
 
@@ -73,10 +72,12 @@ public class ItemDropListener implements Listener {
             if (item == null) continue;
 
             ItemType type = ItemTypeDetector.getItemType(item);
-            if (type != ItemType.ARMOR && Math.random() * 100 >= 30) continue;
+            if (type != ItemType.ARMOR) continue;
+            if (Math.random() * 100 >= 60) continue;
+
 
             RPGItemStack rpgItemStack = new RPGItemStack(item);
-            PerkManager.rollPerks(rpgItemStack);
+            //PerkManager.rollPerks(rpgItemStack);
             loot.set(i, perkTransformer.transformRPGItemStack(rpgItemStack));
         }
     }

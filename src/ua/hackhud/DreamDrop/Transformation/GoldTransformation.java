@@ -3,36 +3,47 @@ package ua.hackhud.DreamDrop.Transformation;
 import noppes.npcs.side.server.bukkit.listeners.utils.BukkitItemStack;
 import org.bukkit.inventory.ItemStack;
 import ua.hackhud.DreamDrop.Entity.RPGItemStack;
-import ua.hackhud.DreamDrop.Enum.ItemType;
 import ua.hackhud.DreamDrop.Main;
-import ua.hackhud.DreamDrop.Perk.PerkManager;
 import ua.hackhud.DreamDrop.Util.ConvertUtils;
-import ua.hackhud.DreamDrop.Util.ItemTypeDetector;
+import ua.hackhud.DreamDrop.Util.GradientUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerkTransformation extends RPGItemTransformation {
+public class GoldTransformation extends RPGItemTransformation {
+
+    private static final String ATTRIBUTE_PREFIX = Main.getPlugin().getConfigManager().getAttributeStartString();
+
+    private static final String QUALITY_LINE_PREFIX = "{icon158}.png §7Качество предмета:";
+    private static final String FORMATTED_QUALITY_LINE =
+            "{icon158}.png §7Качество предмета: #FFA900З#FFB418о#FFBE31л#FFC949о#FFD461т#FFDE7Aо#FFE992е";
+
+    private static final String REPAIR_LINE_PREFIX = "{icon19}.png§7 Ремонт с помощью:";
+    private static final String FORMATTED_REPAIR_LINE =
+            "{icon19}.png§7 Ремонт с помощью: #FFC949Золотой слиток §7(8 шт.)";
+
+    private static final String COLOR_START = "#FFA900";
+    private static final String COLOR_END = "#FFE992";
 
     @Override
     public BukkitItemStack transformRPGItemStack(RPGItemStack itemStack) {
-        PerkManager.rollPerks(itemStack);
+        itemStack.multiplyPercentAll(50);
+
         BukkitItemStack bukkitItem = itemStack.getBukkitItemStack();
-        List<String> newLore = buildTransformedLore(itemStack);
-        bukkitItem.setLore(newLore);
+        String strippedName = GradientUtil.stripHexColors(bukkitItem.getName());
+        String coloredName = GradientUtil.setHexName(COLOR_START, COLOR_END, strippedName);
+        bukkitItem.setName(coloredName);
+
+        bukkitItem.setLore(buildTransformedLore(itemStack));
         return bukkitItem;
     }
 
     public net.minecraft.item.ItemStack transformRPGItemStackMirror(ItemStack itemStack) {
         BukkitItemStack bukkitItemStack = ConvertUtils.asBukkitItemStackMirror(itemStack, 100);
-        if (ItemTypeDetector.getItemType(bukkitItemStack) != ItemType.ARMOR) {
-            return ConvertUtils.loadFromBukkitItemStack(bukkitItemStack);
-        }
         RPGItemStack rpgItemStack = new RPGItemStack(bukkitItemStack);
         BukkitItemStack bukkitItemStackTransformed = transformRPGItemStack(rpgItemStack);
         return ConvertUtils.loadFromBukkitItemStack(bukkitItemStackTransformed);
     }
-
     private List<String> buildTransformedLore(RPGItemStack itemStack) {
         List<String> originalLore = itemStack.getBukkitItemStack().getLore();
         List<String> newLore = new ArrayList<>();
@@ -42,18 +53,21 @@ public class PerkTransformation extends RPGItemTransformation {
         }
 
         boolean parsingAttributes = false;
-        String attributeStart = Main.getPlugin().getConfigManager().getAttributeStartString();
-        String replaceTarget = Main.getPlugin().getConfigManager().getStringToReplace();
 
         for (String line : originalLore) {
-            if (line.startsWith(replaceTarget)) {
-                newLore.add(buildPerksLine(itemStack));
+            if (line.startsWith(QUALITY_LINE_PREFIX)) {
+                newLore.add(FORMATTED_QUALITY_LINE);
+                continue;
+            }
+
+            if (line.startsWith(REPAIR_LINE_PREFIX)) {
+                newLore.add(FORMATTED_REPAIR_LINE);
                 continue;
             }
 
             if (!parsingAttributes) {
                 newLore.add(line);
-                if (line.startsWith(attributeStart)) {
+                if (line.startsWith(ATTRIBUTE_PREFIX)) {
                     parsingAttributes = true;
                 }
             } else if (line.trim().isEmpty()) {
@@ -68,14 +82,6 @@ public class PerkTransformation extends RPGItemTransformation {
         }
 
         return newLore;
-    }
-
-    private String buildPerksLine(RPGItemStack itemStack) {
-        StringBuilder icons = new StringBuilder();
-        for (String icon : itemStack.getPerksIcons()) {
-            icons.append(" ").append(icon);
-        }
-        return "{icon2}.png §7Перки:" + icons.toString();
     }
 
     private void appendAttributes(List<String> loreList, RPGItemStack itemStack) {

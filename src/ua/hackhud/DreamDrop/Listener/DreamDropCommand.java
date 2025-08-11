@@ -67,7 +67,8 @@ public class DreamDropCommand implements CommandExecutor {
     }
 
     private void handleReload(CommandSender sender) {
-        Main.getPlugin().registerConfig();
+        Main.getPlugin().getConfigManager().reload();
+        Main.getPlugin().getStorageManager().reload();
         MessageUtils.sendMessage(sender, "&a>> DreamDrop: Плагин успешно перезагружен!");
     }
 

@@ -1,9 +1,16 @@
-# hackhud's config 31.07.2025
+# hackhud's config 12.08.2025
+global_final:
+  attributePattern: '^(\§[a-zA-Z0-9]+)([+-])(\d+\.?\d*)(%?) ?(.*)$'
+  attributeStartString: "{icon154}.png §7Дополнительные свойства:"
+  stringToReplace: "{icon2}.png §7Заточка предмета:"
 
-#starts with
-stringToReplace: "{icon2}.png §7Заточка предмета:"
-attributeStartString: "{icon154}.png §7Дополнительные свойства:"
-attributePattern: '^(\§[a-zA-Z0-9]+)([+-])(\d+\.?\d*)(%?) ?(.*)$'
+#perks section
+perks:
+  perkMaxCount: 3
+  perkedItemChance: 60.0
+  skewedParametr: 2.0
+  perkLine: "{icon2}.png §7Перки:"
+  perkIconString: " %perkIcon%"
 
 rarities:
   1:

@@ -6,12 +6,13 @@ import ua.hackhud.DreamDrop.Config.StorageManager;
 import ua.hackhud.DreamDrop.Listener.DreamDropCommand;
 import ua.hackhud.DreamDrop.Perk.PerkRegistry;
 import ua.hackhud.DreamDrop.Listener.ItemDropListener;
+import ua.hackhud.DreamDrop.Transformation.GoldTransformation;
+import ua.hackhud.DreamDrop.Transformation.PerkTransformation;
 
 public class Main extends JavaPlugin {
     private static Main plugin;
     private ConfigManager configManager;
     private StorageManager storageManager;
-
     @Override
     public void onEnable() {
         plugin = this;
@@ -35,5 +36,11 @@ public class Main extends JavaPlugin {
     }
     public StorageManager getStorageManager() {
         return storageManager;
+    }
+    public GoldTransformation getGoldTransformation() {
+        return new GoldTransformation();
+    }
+    public PerkTransformation getPerkTransformation() {
+        return new PerkTransformation();
     }
 }

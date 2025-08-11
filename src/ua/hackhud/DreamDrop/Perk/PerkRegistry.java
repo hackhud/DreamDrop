@@ -46,7 +46,7 @@ public class PerkRegistry {
         register(new ArmadilloPerk(3, "ARMOR*2, SPEED-10, EVASION-10"));
         register(new AbsorptionPerk(3, "HEALTH+REGEN, REGEN-REGEN"));
         register(new EnergyExchangePerk(3, "ADDITIONAL_DURABILITY-ADDITIONAL_DURABILITY"));
-        register(new LuckPerk(3, "NPC_DROP_CHANCE"));
+        register(new LuckPerk(5, "NPC_DROP_CHANCE"));
         register(new AcuityPerk(3, "BOW_DAMAGE+CRIT_DAMAGE"));
         register(new EmptinessPerk(3, "HEALTH->DAMAGE"));
         register(new GhostProtectionPerk(3, "ARMOR+->BLOCK_ARMOR /4"));

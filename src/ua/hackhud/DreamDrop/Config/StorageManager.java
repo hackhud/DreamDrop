@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StorageManager {
-
     private final Map<String, SimpleStorage> simpleStorages = new HashMap<>();
     private final Map<String, WeightedStorage> weightedStorages = new HashMap<>();
     private final File simpleStorageFolder = new File(Main.getPlugin().getDataFolder(), "SimpleStorage");
@@ -20,12 +19,17 @@ public class StorageManager {
         loadWeightedStorages();
     }
 
+    public void reload() {
+        simpleStorages.clear();
+        weightedStorages.clear();
+        loadSimpleStorages();
+        loadWeightedStorages();
+    }
+
     private void loadSimpleStorages() {
         if (!simpleStorageFolder.exists()) simpleStorageFolder.mkdirs();
-
         File[] files = simpleStorageFolder.listFiles((dir, name) -> name.endsWith(".yml"));
         if (files == null) return;
-
         for (File file : files) {
             String name = file.getName().replace(".yml", "");
             simpleStorages.put(name, new SimpleStorage(name));
@@ -34,10 +38,8 @@ public class StorageManager {
 
     private void loadWeightedStorages() {
         if (!weightedStorageFolder.exists()) weightedStorageFolder.mkdirs();
-
         File[] files = weightedStorageFolder.listFiles((dir, name) -> name.endsWith(".yml"));
         if (files == null) return;
-
         for (File file : files) {
             String name = file.getName().replace(".yml", "");
             weightedStorages.put(name, new WeightedStorage(name));
@@ -51,11 +53,13 @@ public class StorageManager {
     public WeightedStorage getWeightedStorage(String name) {
         return weightedStorages.computeIfAbsent(name, WeightedStorage::new);
     }
+
     public boolean isSimpleStorageExists(String name) {
-        return simpleStorages.get(name) != null;
+        return simpleStorages.containsKey(name);
     }
+
     public boolean isWeightedStorageExists(String name) {
-        return weightedStorages.get(name) != null;
+        return weightedStorages.containsKey(name);
     }
 
     public void saveAll() {
