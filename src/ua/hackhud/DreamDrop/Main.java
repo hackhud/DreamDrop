@@ -3,7 +3,7 @@ package ua.hackhud.DreamDrop;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.hackhud.DreamDrop.Config.ConfigManager;
 import ua.hackhud.DreamDrop.Config.StorageManager;
-import ua.hackhud.DreamDrop.Listener.DreamDropCommand;
+import ua.hackhud.DreamDrop.Command.DreamDropCommand;
 import ua.hackhud.DreamDrop.Perk.PerkRegistry;
 import ua.hackhud.DreamDrop.Listener.ItemDropListener;
 import ua.hackhud.DreamDrop.Transformation.GoldTransformation;
