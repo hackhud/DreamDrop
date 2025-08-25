@@ -19,6 +19,8 @@ public class CommandFactory {
         commands.put("add", new AddCommand());
         commands.put("give", new GiveCommand());
         commands.put("perkedgive", new PerkedGiveCommand());
+        commands.put("goldengive", new GoldenGiveCommand());
+        commands.put("bag", new BagCommand());
     }
 
     public Command getCommand(String commandName) {

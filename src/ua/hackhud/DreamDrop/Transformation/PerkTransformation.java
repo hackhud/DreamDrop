@@ -56,7 +56,7 @@ public class PerkTransformation extends RPGItemTransformation {
                 if (line.startsWith(attributeStart)) {
                     parsingAttributes = true;
                 }
-            } else if (line.trim().isEmpty()) {
+            } else if (line.trim().isEmpty() || line.equals("§7")) {
                 appendAttributes(newLore, itemStack);
                 newLore.add(line);
                 parsingAttributes = false;

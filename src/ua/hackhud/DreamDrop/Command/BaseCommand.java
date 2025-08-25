@@ -93,7 +93,7 @@ public abstract class BaseCommand implements Command {
 
     protected void giveItemToPlayer(Player player, ItemStack item) {
         Map<Integer, ItemStack> leftOver = player.getInventory().addItem(item);
-
+        player.updateInventory();
         if (!leftOver.isEmpty()) {
             for (ItemStack leftoverItem : leftOver.values()) {
                 Location dropLocation = player.getLocation();

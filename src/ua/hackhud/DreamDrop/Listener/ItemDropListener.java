@@ -36,7 +36,6 @@ public class ItemDropListener implements Listener {
         if (title.contains("Элитный")) {
             addCurrencyDrop(loot, RUBINE, level);
             rollPerksOnLoot(loot);
-            //event.setDrop(loot);
         }
     }
 
@@ -69,6 +68,11 @@ public class ItemDropListener implements Listener {
 
         for (int i = 0; i < loot.size(); i++) {
             BukkitItemStack item = loot.get(i);
+
+            if (item.getChance() >= 1.0) {
+                item.setChance(item.getChance() + 3.0); //chance booster hardcode for one vipe
+            }
+
             if (item == null) continue;
 
             ItemType type = ItemTypeDetector.getItemType(item);
@@ -77,7 +81,6 @@ public class ItemDropListener implements Listener {
 
 
             RPGItemStack rpgItemStack = new RPGItemStack(item);
-            //PerkManager.rollPerks(rpgItemStack);
             loot.set(i, perkTransformer.transformRPGItemStack(rpgItemStack));
         }
     }

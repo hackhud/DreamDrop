@@ -14,6 +14,8 @@ import java.util.Random;
 
 public class WeightedStorage {
 
+    private static final String ITEMS_PATH = "items.";
+
     private final String name;
     private final File file;
     private final List<WeightedItem> items = new ArrayList<>();
@@ -26,8 +28,10 @@ public class WeightedStorage {
         if (!file.exists()) {
             try {
                 file.getParentFile().mkdirs();
-                file.createNewFile();
-                saveToFile();
+                boolean fileCreated = file.createNewFile();
+                if (fileCreated) {
+                    saveToFile();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -45,11 +49,12 @@ public class WeightedStorage {
         if (items.isEmpty()) return null;
 
         int totalWeight = items.stream().mapToInt(WeightedItem::getWeight).sum();
-        int r = random.nextInt(totalWeight), current = 0;
+        int randomValue = random.nextInt(totalWeight);
+        int current = 0;
 
-        for (WeightedItem i : items) {
-            current += i.getWeight();
-            if (r < current) return i.getItem();
+        for (WeightedItem weightedItem : items) {
+            current += weightedItem.getWeight();
+            if (randomValue < current) return weightedItem.getItem();
         }
         return null;
     }
@@ -64,9 +69,9 @@ public class WeightedStorage {
     public void saveToFile() {
         FileConfiguration config = new YamlConfiguration();
         for (int i = 0; i < items.size(); i++) {
-            WeightedItem wi = items.get(i);
-            config.set("items." + i + ".item", wi.getItem());
-            config.set("items." + i + ".weight", wi.getWeight());
+            WeightedItem weightedItem = items.get(i);
+            config.set(ITEMS_PATH + i + ".item", weightedItem.getItem());
+            config.set(ITEMS_PATH + i + ".weight", weightedItem.getWeight());
         }
         try {
             config.save(file);
@@ -79,10 +84,10 @@ public class WeightedStorage {
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         items.clear();
 
-        if (config.contains("items")) {
-            for (String key : config.getConfigurationSection("items").getKeys(false)) {
-                ItemStack item = config.getItemStack("items." + key + ".item");
-                int weight = config.getInt("items." + key + ".weight");
+        if (config.contains(ITEMS_PATH)) {
+            for (String key : config.getConfigurationSection(ITEMS_PATH).getKeys(false)) {
+                ItemStack item = config.getItemStack(ITEMS_PATH + key + ".item");
+                int weight = config.getInt(ITEMS_PATH + key + ".weight");
                 if (item != null) {
                     items.add(new WeightedItem(item, weight));
                 }
@@ -92,5 +97,22 @@ public class WeightedStorage {
 
     public String getName() {
         return name;
+    }
+
+    public List<WeightedItem> getItems() {
+        return new ArrayList<>(items);
+    }
+
+    public void clearItems() {
+        items.clear();
+        saveToFile();
+    }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
+
+    public int size() {
+        return items.size();
     }
 }

@@ -70,7 +70,7 @@ public class GoldTransformation extends RPGItemTransformation {
                 if (line.startsWith(ATTRIBUTE_PREFIX)) {
                     parsingAttributes = true;
                 }
-            } else if (line.trim().isEmpty()) {
+            } else if (line.trim().isEmpty() || line.equals("§7")) {
                 appendAttributes(newLore, itemStack);
                 newLore.add(line);
                 parsingAttributes = false;

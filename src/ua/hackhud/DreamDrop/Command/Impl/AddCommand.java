@@ -5,9 +5,13 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import ua.hackhud.DreamDrop.Entity.Storage.BagStorage;
 import ua.hackhud.DreamDrop.Entity.Storage.SimpleStorage;
 import ua.hackhud.DreamDrop.Entity.Storage.WeightedStorage;
 import ua.hackhud.DreamDrop.Util.MessageUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddCommand extends BaseCommand {
 
@@ -28,15 +32,17 @@ public class AddCommand extends BaseCommand {
                 return addToSimpleStorage(sender, storageName, itemInHand);
             case "weighted":
                 return addToWeightedStorage(sender, args, storageName, itemInHand);
+            case "bag":
+                return addToBagStorage(sender, args, storageName, itemInHand);
             default:
-                throw new IllegalArgumentException("Тип хранилища должен быть simple или weighted.");
+                throw new IllegalArgumentException("Тип хранилища должен быть simple, weighted или bag.");
         }
     }
 
     private boolean addToSimpleStorage(CommandSender sender, String storageName, ItemStack item) {
         SimpleStorage storage = plugin.getStorageManager().getSimpleStorage(storageName);
         storage.addItem(item.clone());
-        MessageUtils.sendMessage(sender, "&a>> DreamDrop: Предмет добавлен в простое хранилище '" + storageName + "'");
+        MessageUtils.sendMessage(sender, PREFIX + "Предмет добавлен в простое хранилище '" + storageName + "'");
         return true;
     }
 
@@ -47,7 +53,23 @@ public class AddCommand extends BaseCommand {
 
         WeightedStorage storage = plugin.getStorageManager().getWeightedStorage(storageName);
         storage.addItem(item.clone(), weight);
-        MessageUtils.sendMessage(sender, "&a>> DreamDrop: Предмет добавлен во взвешенное хранилище '" + storageName + "' с весом " + weight);
+        MessageUtils.sendMessage(sender, PREFIX + "Предмет добавлен во взвешенное хранилище '" + storageName + "' с весом " + weight);
+        return true;
+    }
+
+    private boolean addToBagStorage(CommandSender sender, String[] args, String storageName, ItemStack item) {
+        validateArgsLength(args, 3, "Использование: /dreamdrop add bag <storage> <weight>");
+
+        int weight = parsePositiveInteger(args[2], "Вес должен быть целым числом больше нуля!");
+        List<String> commandList = new ArrayList<>();
+        BagStorage storage = plugin.getStorageManager().getBagStorage(storageName);
+        if (storage == null) {
+            MessageUtils.sendMessage(sender, ERROR_PREFIX + "Хранилища с именем '" + storageName + "' не существует");
+            return true;
+        }
+
+        storage.addItem(item.clone(), weight, commandList);
+        MessageUtils.sendMessage(sender, PREFIX + "Предмет добавлен в хранилище-сумку '" + storageName + "' с весом " + weight);
         return true;
     }
 
@@ -61,7 +83,7 @@ public class AddCommand extends BaseCommand {
 
     @Override
     public String getUsage() {
-        return "/dreamdrop add <simple|weighted> <storage> [weight]";
+        return "/dreamdrop add <simple|weighted|bag> <storage> [weight]";
     }
 
     @Override
